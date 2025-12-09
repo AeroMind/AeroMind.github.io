@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on AeroMind</title><link>https://aeromind.github.io/en/tags/ai/</link><description>Recent content in AI on AeroMind</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>© 2025 AeroMind</copyright><lastBuildDate>Sat, 06 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://aeromind.github.io/en/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>From Prompt to Environment: The Evolution of Context — Understanding the Core Progression of Agent Applications</title><link>https://aeromind.github.io/en/posts/context-journey-blog/</link><pubDate>Sat, 06 Dec 2025 00:00:00 +0000</pubDate><guid>https://aeromind.github.io/en/posts/context-journey-blog/</guid><description>&lt;h2 class="relative group"&gt;0. Introduction
+&lt;div id="0-introduction" class="anchor"&gt;&lt;/div&gt;
+&lt;span
+class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"&gt;
+&lt;a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#0-introduction" aria-label="Anchor"&gt;#&lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;
+&lt;p&gt;How does an Agent &amp;ldquo;see&amp;rdquo; the world?&lt;/p&gt;
+&lt;p&gt;It has no eyes, no ears—just an input window. No matter how complex the outside world is, an Agent can only perceive one thing: &lt;strong&gt;Context&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;A prompt is context. A tool call&amp;rsquo;s return value is context. A file&amp;rsquo;s contents are context. An error message is context.&lt;/p&gt;
+&lt;p&gt;For an Agent: &lt;strong&gt;Everything is context&lt;/strong&gt;.&lt;/p&gt;</description></item></channel></rss>

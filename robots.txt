@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aeromind.github.io/sitemap.xml
