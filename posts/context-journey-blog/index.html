@@ -1,4 +1,45 @@
-<!doctype html><html lang=zh dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><meta charset=utf-8><meta http-equiv=content-language content="zh-CN"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=theme-color><title>从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进 &#183; AeroMind</title><meta name=title content="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进 &#183; AeroMind"><meta name=keywords content="Agent,AI,Context,LLM,Claude,"><link rel=canonical href=https://aeromind.github.io/posts/context-journey-blog/><meta name=author content="AeroMind"><meta property="og:url" content="https://aeromind.github.io/posts/context-journey-blog/"><meta property="og:site_name" content="AeroMind"><meta property="og:title" content="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进"><meta property="og:description" content='0. 引子 # Agent 如何"看见"世界？
+<!doctype html>
+<html
+  lang="zh"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="true"><head>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="zh-CN">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  
+    <title>从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进 &middot; AeroMind</title>
+    <meta name="title" content="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进 &middot; AeroMind">
+  
+
+  
+  
+  
+    <meta name="keywords" content="Agent,AI,Context,LLM,Claude,">
+  
+  
+  
+  <link rel="canonical" href="https://aeromind.github.io/posts/context-journey-blog/">
+  
+
+  
+  
+    <meta name="author" content="AeroMind">
+  
+  
+
+  
+  <meta property="og:url" content="https://aeromind.github.io/posts/context-journey-blog/">
+  <meta property="og:site_name" content="AeroMind">
+  <meta property="og:title" content="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进">
+  <meta property="og:description" content="0. 引子 # Agent 如何&#34;看见&#34;世界？
 它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：Context。
 一段 prompt 是 context，一次工具调用的返回是 context，一个文件的内容是 context，一条报错信息也是 context。
 对于 Agent 来说：Everything is context。
@@ -6,7 +47,22 @@
 1. Context 的起源 — In-Context Learning # 传统机器学习的范式很简单：一个任务，训练一个模型。
 情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。
 LLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 context 来切换任务。你不需要重新训练，只需要换一段 prompt。
-传统模型：任务 → 训练 → 专用模型'><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-12-06T00:00:00+00:00"><meta property="article:modified_time" content="2025-12-06T00:00:00+00:00"><meta property="article:tag" content="Agent"><meta property="article:tag" content="AI"><meta property="article:tag" content="Context"><meta property="article:tag" content="LLM"><meta property="article:tag" content="Claude"><meta name=twitter:card content="summary"><meta name=twitter:title content="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进"><meta name=twitter:description content='0. 引子 # Agent 如何"看见"世界？
+传统模型：任务 → 训练 → 专用模型">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-06T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-06T00:00:00+00:00">
+    <meta property="article:tag" content="Agent">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Context">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Claude">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进">
+  <meta name="twitter:description" content="0. 引子 # Agent 如何&#34;看见&#34;世界？
 它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：Context。
 一段 prompt 是 context，一次工具调用的返回是 context，一个文件的内容是 context，一条报错信息也是 context。
 对于 Agent 来说：Everything is context。
@@ -14,34 +70,1725 @@ LLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语
 1. Context 的起源 — In-Context Learning # 传统机器学习的范式很简单：一个任务，训练一个模型。
 情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。
 LLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 context 来切换任务。你不需要重新训练，只需要换一段 prompt。
-传统模型：任务 → 训练 → 专用模型'><link type=text/css rel=stylesheet href=/css/main.bundle.min.0975a8c7c266a0697f94839b45e1574c449de253527d44ed516d5c5c3c820c9389d7d86576faae12267b129f8749ecbf7581cddb636aba7690aa633b95aaa87d.css integrity="sha512-CXWox8JmoGl/lIObReFXTESd4lNSfUTtUW1cXDyCDJOJ19hldvquEiZ7Ep+HSey/dYHN22NqunaQqmM7laqofQ=="><script type=text/javascript src=/js/appearance.min.6f41174b3a05b680820fe08cadbfa5fb7a7ca347b76a0955cdc68b9d8aca1ce24f0547e138cea33bcc7904d551a90afcb1cc7f2d9fe8557075d501419046c08c.js integrity="sha512-b0EXSzoFtoCCD+CMrb+l+3p8o0e3aglVzcaLnYrKHOJPBUfhOM6jO8x5BNVRqQr8scx/LZ/oVXB11QFBkEbAjA=="></script><script src=/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7+kfJ6kKCJxQGC+8wm+Bz9JucDjDTGNew=="></script><script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.9cc802d09f28c6af56ceee7bc6e320a39251fdae98243f2a9942f221ac57a9f49c51609699a91794a7b2580ee1deaa8e4d794a68ffa94aa317c66e893ce51e02.js integrity="sha512-nMgC0J8oxq9Wzu57xuMgo5JR/a6YJD8qmULyIaxXqfScUWCWmakXlKeyWA7h3qqOTXlKaP+pSqMXxm6JPOUeAg==" data-copy data-copied></script><script src=/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj+KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进","headline":"从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进","abstract":"\u003ch2 class=\u0022relative group\u0022\u003e0. 引子\n    \u003cdiv id=\u00220-引子\u0022 class=\u0022anchor\u0022\u003e\u003c\/div\u003e\n    \n    \u003cspan\n        class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none\u0022\u003e\n        \u003ca class=\u0022text-primary-300 dark:text-neutral-700 !no-underline\u0022 href=\u0022#0-%e5%bc%95%e5%ad%90\u0022 aria-label=\u0022\u0022\u003e#\u003c\/a\u003e\n    \u003c\/span\u003e\n    \n\u003c\/h2\u003e\n\u003cp\u003eAgent 如何\u0026quot;看见\u0026quot;世界？\u003c\/p\u003e\n\u003cp\u003e它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：\u003cstrong\u003eContext\u003c\/strong\u003e。\u003c\/p\u003e\n\u003cp\u003e一段 prompt 是 context，一次工具调用的返回是 context，一个文件的内容是 context，一条报错信息也是 context。\u003c\/p\u003e\n\u003cp\u003e对于 Agent 来说：\u003cstrong\u003eEverything is context\u003c\/strong\u003e。\u003c\/p\u003e\n\u003cp\u003e这篇文章讲述 context 如何从一段静态文字，演进为 Agent 感知世界的唯一接口。这个演进过程，就是 \u003cstrong\u003eContext Engineering\u003c\/strong\u003e 的诞生之路。\u003c\/p\u003e\n\u003chr\u003e\n\n\u003ch2 class=\u0022relative group\u0022\u003e1. Context 的起源 — In-Context Learning\n    \u003cdiv id=\u00221-context-的起源--in-context-learning\u0022 class=\u0022anchor\u0022\u003e\u003c\/div\u003e\n    \n    \u003cspan\n        class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none\u0022\u003e\n        \u003ca class=\u0022text-primary-300 dark:text-neutral-700 !no-underline\u0022 href=\u0022#1-context-%e7%9a%84%e8%b5%b7%e6%ba%90--in-context-learning\u0022 aria-label=\u0022\u0022\u003e#\u003c\/a\u003e\n    \u003c\/span\u003e\n    \n\u003c\/h2\u003e\n\u003cp\u003e传统机器学习的范式很简单：一个任务，训练一个模型。\u003c\/p\u003e\n\u003cp\u003e情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。\u003c\/p\u003e\n\u003cp\u003eLLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 \u003cstrong\u003econtext\u003c\/strong\u003e 来切换任务。你不需要重新训练，只需要换一段 prompt。\u003c\/p\u003e\n\u003cp\u003e\u003cstrong\u003e传统模型\u003c\/strong\u003e：任务 → 训练 → 专用模型\u003c\/p\u003e","inLanguage":"zh-CN","url":"https://aeromind.github.io/posts/context-journey-blog/","author":{"@type":"Person","name":"AeroMind"},"copyrightYear":"2025","dateCreated":"2025-12-06T00:00:00\u002b00:00","datePublished":"2025-12-06T00:00:00\u002b00:00","dateModified":"2025-12-06T00:00:00\u002b00:00","keywords":["Agent","AI","Context","LLM","Claude"],"mainEntityOfPage":"true","wordCount":"850"}]</script></head><body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600"><div id=the-top class="absolute flex self-center"><a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600" href=#main-content><span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span></a></div><div class=min-h-[148px]></div><div class="fixed inset-x-0 z-100"><div id=menu-blur class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom bg-neutral dark:bg-neutral-800"></div><div class="relative m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32"><div class="main-menu flex items-center justify-between py-6 md:justify-start gap-x-3 pt-[2px] pr-2 md:pr-4 pb-[3px] pl-0"><div class="flex flex-1 items-center justify-between"><nav class="flex space-x-3"><a href=/ class="text-base font-medium">AeroMind</a></nav><nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12"><a href=/posts/ class="flex items-center hover:text-primary-600 dark:hover:text-primary-400" aria-label=文章 title=Posts><p class="text-base font-medium">文章</p></a><a href=/tags/ class="flex items-center hover:text-primary-600 dark:hover:text-primary-400" aria-label=标签 title=Tags><p class="text-base font-medium">标签</p></a><a href=/about/ class="flex items-center hover:text-primary-600 dark:hover:text-primary-400" aria-label=关于 title=关于><p class="text-base font-medium">关于</p></a><div><div class="cursor-pointer flex items-center nested-menu"><span class=me-1><span class="relative block icon"><svg viewBox="0 0 640 512"><path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3.0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3.0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1.1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2 179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4.9.6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9L467 333.8c-4.5-2.7-8.8-5.5-13.1-8.5-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8L410 286.1c-7.8-7.8-7.8-20.5.0-28.3s20.5-7.8 28.3.0l14.6 14.6.5.5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg></span></span><div class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400" title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进"></div></div><div class="absolute menuhide"><div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl"><div class="flex flex-col space-y-3"><a href=/posts/context-journey-blog/ class="flex items-center"><p class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400" title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进">中文</p></a><a href=/en/posts/context-journey-blog/ class="flex items-center"><p class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400" title="From Prompt to Environment: The Evolution of Context — Understanding the Core Progression of Agent Applications">EN</p></a></div></div></div></div><button id=search-button aria-label=Search class="text-base hover:text-primary-600 dark:hover:text-primary-400" title>
-<span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button><div class="flex items-center"><button id=appearance-switcher aria-label="Dark mode switcher" type=button class="text-base hover:text-primary-600 dark:hover:text-primary-400"><div class="flex items-center justify-center dark:hidden"><span class="relative block icon"><svg viewBox="0 0 512 512"><path fill="currentColor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></div><div class="items-center justify-center hidden dark:flex"><span class="relative block icon"><svg viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></div></button></div></nav><div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12"><span></span><div><div class="cursor-pointer flex items-center nested-menu"><span class=me-1><span class="relative block icon"><svg viewBox="0 0 640 512"><path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3.0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3.0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1.1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2 179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4.9.6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9L467 333.8c-4.5-2.7-8.8-5.5-13.1-8.5-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8L410 286.1c-7.8-7.8-7.8-20.5.0-28.3s20.5-7.8 28.3.0l14.6 14.6.5.5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg></span></span><div class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400" title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进"></div></div><div class="absolute menuhide"><div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl"><div class="flex flex-col space-y-3"><a href=/posts/context-journey-blog/ class="flex items-center"><p class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400" title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进">中文</p></a><a href=/en/posts/context-journey-blog/ class="flex items-center"><p class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400" title="From Prompt to Environment: The Evolution of Context — Understanding the Core Progression of Agent Applications">EN</p></a></div></div></div></div><button id=search-button-mobile aria-label=Search class="text-base hover:text-primary-600 dark:hover:text-primary-400" title>
-<span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
-</span></button>
-<button id=appearance-switcher-mobile aria-label="Dark mode switcher" type=button class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1"><div class="flex items-center justify-center dark:hidden"><span class="relative block icon"><svg viewBox="0 0 512 512"><path fill="currentColor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></div><div class="items-center justify-center hidden dark:flex"><span class="relative block icon"><svg viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></div></button></div></div><div class="-my-2 md:hidden"><div id=menu-button class=block><div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"><span class="relative block icon"><svg viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416c17.7.0 32 14.33 32 32 0 17.7-14.3 32-32 32H32C14.33 128 0 113.7.0 96zM0 256c0-17.7 14.33-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.67.0-32-14.3-32-32zM416 448H32c-17.67.0-32-14.3-32-32s14.33-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32z"/></svg></span></div><div id=menu-wrapper class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]"><ul class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl"><li id=menu-close-button><span class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400"><span class="relative block icon"><svg viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></span></li><li class=mt-1><a href=/posts/ class="flex items-center hover:text-primary-600 dark:hover:text-primary-400" aria-label=文章 title=Posts><p class="text-bg font-bg">文章</p></a></li><li class=mt-1><a href=/tags/ class="flex items-center hover:text-primary-600 dark:hover:text-primary-400" aria-label=标签 title=Tags><p class="text-bg font-bg">标签</p></a></li><li class=mt-1><a href=/about/ class="flex items-center hover:text-primary-600 dark:hover:text-primary-400" aria-label=关于 title=关于><p class="text-bg font-bg">关于</p></a></li></ul></div></div></div></div></div></div><script type=text/javascript src=/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js integrity="sha512-AKV8c+oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ+pkPSYl5ixQYmehaQ==" data-blur-id=menu-blur></script><div class="relative flex flex-col grow"><main id=main-content class=grow><article><header id=single_header class="mt-5 max-w-prose"><ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden"><li class=hidden><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/>AeroMind</a><span class="px-1 text-primary-500">/</span></li><li class=inline><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/>Posts</a><span class="px-1 text-primary-500">/</span></li><li class=hidden><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/context-journey-blog/>从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进</a><span class="px-1 text-primary-500">/</span></li></ol><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进</h1><div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center"><time datetime=2025-12-06T00:00:00+00:00></time><span class="px-2 text-primary-500">&#183;</span><span></span><span class="px-2 text-primary-500">&#183;</span><span title></span></div><div class="flex flex-row flex-wrap items-center"><a class="relative mt-[0.5rem] me-2" href=/tags/agent/><span class="flex cursor-pointer"><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">Agent
-</span></span></a><a class="relative mt-[0.5rem] me-2" href=/tags/ai/><span class="flex cursor-pointer"><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">AI
-</span></span></a><a class="relative mt-[0.5rem] me-2" href=/tags/context/><span class="flex cursor-pointer"><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">Context
-</span></span></a><a class="relative mt-[0.5rem] me-2" href=/tags/llm/><span class="flex cursor-pointer"><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">LLM
-</span></span></a><a class="relative mt-[0.5rem] me-2" href=/tags/claude/><span class="flex cursor-pointer"><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">Claude</span></span></a></div></div><div class="flex author"><div class=place-self-center><div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400"></div><div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">AeroMind</div><div class="text-2xl sm:text-lg"></div></div></div><div class=mb-5></div></header><section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row"><div class="order-first lg:ml-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs"><div class="toc ps-5 print:hidden lg:sticky lg:top-[140px]"><details open id=TOCView class="toc-right mt-0 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg -ms-5 ps-5 pe-2 hidden lg:block"><summary class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"></summary><div class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600"><nav id=TableOfContents><ul><li><a href=#0-引子>0. 引子</a></li><li><a href=#1-context-的起源--in-context-learning>1. Context 的起源 — In-Context Learning</a></li><li><a href=#2-手动构建-context--prompt-engineering>2. 手动构建 Context — Prompt Engineering</a></li><li><a href=#3-自动检索-context--rag>3. 自动检索 Context — RAG</a><ul><li><a href=#context-的稀缺性>Context 的稀缺性</a></li><li><a href=#rag-的局限>RAG 的局限</a></li></ul></li><li><a href=#4-动态生成-context--tools>4. 动态生成 Context — Tools</a><ul><li><a href=#mcp工具的标准化>MCP：工具的标准化</a></li></ul></li><li><a href=#5-封装-context-模式--skills>5. 封装 Context 模式 — Skills</a><ul><li><a href=#skill可发现可加载的-context-包>Skill：可发现、可加载的 Context 包</a></li><li><a href=#skill-vs-shell-脚本>Skill vs Shell 脚本</a></li></ul></li><li><a href=#6-context-的管理--长程任务的挑战>6. Context 的管理 — 长程任务的挑战</a><ul><li><a href=#compaction压缩历史>Compaction：压缩历史</a></li><li><a href=#structured-note-takingagent-的笔记本>Structured Note-taking：Agent 的笔记本</a></li><li><a href=#sub-agent分而治之>Sub-agent：分而治之</a></li><li><a href=#选择哪种方法>选择哪种方法？</a></li><li><a href=#隔离环境跨-session-的外部记忆>隔离环境：跨 Session 的外部记忆</a></li></ul></li><li><a href=#7-context-的完整来源--environment>7. Context 的完整来源 — Environment</a><ul><li><a href=#为什么是-coding-agent>为什么是 Coding Agent？</a></li><li><a href=#代码执行的独特价值>代码执行的独特价值</a></li></ul></li><li><a href=#8-结语context-engineering-的全貌>8. 结语：Context Engineering 的全貌</a></li><li><a href=#参考链接>参考链接</a></li></ul></nav></div></details><details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden"><summary class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"></summary><div class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600"><nav id=TableOfContents><ul><li><a href=#0-引子>0. 引子</a></li><li><a href=#1-context-的起源--in-context-learning>1. Context 的起源 — In-Context Learning</a></li><li><a href=#2-手动构建-context--prompt-engineering>2. 手动构建 Context — Prompt Engineering</a></li><li><a href=#3-自动检索-context--rag>3. 自动检索 Context — RAG</a><ul><li><a href=#context-的稀缺性>Context 的稀缺性</a></li><li><a href=#rag-的局限>RAG 的局限</a></li></ul></li><li><a href=#4-动态生成-context--tools>4. 动态生成 Context — Tools</a><ul><li><a href=#mcp工具的标准化>MCP：工具的标准化</a></li></ul></li><li><a href=#5-封装-context-模式--skills>5. 封装 Context 模式 — Skills</a><ul><li><a href=#skill可发现可加载的-context-包>Skill：可发现、可加载的 Context 包</a></li><li><a href=#skill-vs-shell-脚本>Skill vs Shell 脚本</a></li></ul></li><li><a href=#6-context-的管理--长程任务的挑战>6. Context 的管理 — 长程任务的挑战</a><ul><li><a href=#compaction压缩历史>Compaction：压缩历史</a></li><li><a href=#structured-note-takingagent-的笔记本>Structured Note-taking：Agent 的笔记本</a></li><li><a href=#sub-agent分而治之>Sub-agent：分而治之</a></li><li><a href=#选择哪种方法>选择哪种方法？</a></li><li><a href=#隔离环境跨-session-的外部记忆>隔离环境：跨 Session 的外部记忆</a></li></ul></li><li><a href=#7-context-的完整来源--environment>7. Context 的完整来源 — Environment</a><ul><li><a href=#为什么是-coding-agent>为什么是 Coding Agent？</a></li><li><a href=#代码执行的独特价值>代码执行的独特价值</a></li></ul></li><li><a href=#8-结语context-engineering-的全貌>8. 结语：Context Engineering 的全貌</a></li><li><a href=#参考链接>参考链接</a></li></ul></nav></div></details><script>(function(){"use strict";const s=.33,o="#TableOfContents",i=".anchor",a='a[href^="#"]',r="li ul",c="active";let t=!1;function l(e,n){const o=window.scrollY+window.innerHeight*n,i=[...document.querySelectorAll('#TableOfContents a[href^="#"]')],s=new Set(i.map(e=>e.getAttribute("href").substring(1)));if(t)for(let t=0;t<e.length;t++){const n=e[t];if(!s.has(n.id))continue;const o=n.getBoundingClientRect().top+window.scrollY;if(Math.abs(window.scrollY-o)<100)return n.id}for(let t=e.length-1;t>=0;t--){const n=e[t].getBoundingClientRect().top+window.scrollY;if(n<=o&&s.has(e[t].id))return e[t].id}return e.find(e=>s.has(e.id))?.id||""}function e({toc:e,anchors:t,links:n,scrollOffset:s,collapseInactive:o}){const i=l(t,s);if(!i)return;if(n.forEach(e=>{const t=e.getAttribute("href")===`#${i}`;if(e.classList.toggle(c,t),o){const n=e.closest("li")?.querySelector("ul");n&&(n.style.display=t?"":"none")}}),o){const n=e.querySelector(`a[href="#${CSS.escape(i)}"]`);let t=n;for(;t&&t!==e;)t.tagName==="UL"&&(t.style.display=""),t.tagName==="LI"&&t.querySelector("ul")?.style.setProperty("display",""),t=t.parentElement}}function n(){const n=document.querySelector(o);if(!n)return;const l=!0,u=[...document.querySelectorAll(i)],d=[...n.querySelectorAll(a)];l&&n.querySelectorAll(r).forEach(e=>e.style.display="none"),d.forEach(e=>{e.addEventListener("click",()=>{t=!0})});const c={toc:n,anchors:u,links:d,scrollOffset:s,collapseInactive:l};window.addEventListener("scroll",()=>e(c),{passive:!0}),window.addEventListener("hashchange",()=>e(c),{passive:!0}),e(c)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",n):n()})()</script></div></div><div class="min-w-0 min-h-0 max-w-fit"><div class="article-content max-w-prose mb-20"><h2 class="relative group">0. 引子<div id=0-引子 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#0-%e5%bc%95%e5%ad%90 aria-label>#</a></span></h2><p>Agent 如何"看见"世界？</p><p>它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：<strong>Context</strong>。</p><p>一段 prompt 是 context，一次工具调用的返回是 context，一个文件的内容是 context，一条报错信息也是 context。</p><p>对于 Agent 来说：<strong>Everything is context</strong>。</p><p>这篇文章讲述 context 如何从一段静态文字，演进为 Agent 感知世界的唯一接口。这个演进过程，就是 <strong>Context Engineering</strong> 的诞生之路。</p><hr><h2 class="relative group">1. Context 的起源 — In-Context Learning<div id=1-context-的起源--in-context-learning class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#1-context-%e7%9a%84%e8%b5%b7%e6%ba%90--in-context-learning aria-label>#</a></span></h2><p>传统机器学习的范式很简单：一个任务，训练一个模型。</p><p>情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。</p><p>LLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 <strong>context</strong> 来切换任务。你不需要重新训练，只需要换一段 prompt。</p><p><strong>传统模型</strong>：任务 → 训练 → 专用模型</p><p><strong>LLM</strong>：通用模型 + Context → 任意任务</p><p>这像什么？像是从专用硬件到通用计算机的转变。</p><p>早期计算是专用的——一台机器做一件事。通用计算机的出现改变了这一切：同一台机器，换一个程序，就能做不同的事。</p><p><strong>程序是计算机的 Context</strong>。</p><p>更神奇的是 few-shot learning。给模型几个示例，它就能学会新任务：</p><ul><li>输入：高兴 → <strong>positive</strong></li><li>输入：难过 → <strong>negative</strong></li><li>输入：开心 → <strong>?</strong></li></ul><p>模型会输出 <strong>positive</strong>。</p><p>没有训练，没有微调，示例本身就是学习。传统机器学习需要收集数据、设计特征、训练模型——而 LLM 只需要几个例子放进 context。</p><p>这就是 <strong>In-Context Learning</strong>：能力不再只存在于参数中，Context 成为能力的载体。</p><p>这是 Context Engineering 的起点——我们发现，<strong>Context 可以承载能力，就像程序可以承载计算逻辑</strong>。</p><hr><h2 class="relative group">2. 手动构建 Context — Prompt Engineering<div id=2-手动构建-context--prompt-engineering class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#2-%e6%89%8b%e5%8a%a8%e6%9e%84%e5%bb%ba-context--prompt-engineering aria-label>#</a></span></h2><p>既然 Context 能承载能力，那如何设计更好的 Context？</p><p>Prompt Engineering 应运而生。</p><p>最简单的是角色设定：</p><blockquote><p>你是一个资深的代码审查专家&mldr;</p></blockquote><p>然后是结构化指令：</p><blockquote><p>## 任务
-审查以下代码<br>## 要求
+传统模型：任务 → 训练 → 专用模型">
+
+  
+  
+  
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+  
+    
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.0975a8c7c266a0697f94839b45e1574c449de253527d44ed516d5c5c3c820c9389d7d86576faae12267b129f8749ecbf7581cddb636aba7690aa633b95aaa87d.css"
+    integrity="sha512-CXWox8JmoGl/lIObReFXTESd4lNSfUTtUW1cXDyCDJOJ19hldvquEiZ7Ep&#43;HSey/dYHN22NqunaQqmM7laqofQ==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.6f41174b3a05b680820fe08cadbfa5fb7a7ca347b76a0955cdc68b9d8aca1ce24f0547e138cea33bcc7904d551a90afcb1cc7f2d9fe8557075d501419046c08c.js"
+    integrity="sha512-b0EXSzoFtoCCD&#43;CMrb&#43;l&#43;3p8o0e3aglVzcaLnYrKHOJPBUfhOM6jO8x5BNVRqQr8scx/LZ/oVXB11QFBkEbAjA=="></script>
+  
+  
+  
+  
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+  
+    
+  
+  
+    
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.9cc802d09f28c6af56ceee7bc6e320a39251fdae98243f2a9942f221ac57a9f49c51609699a91794a7b2580ee1deaa8e4d794a68ffa94aa317c66e893ce51e02.js"
+      integrity="sha512-nMgC0J8oxq9Wzu57xuMgo5JR/a6YJD8qmULyIaxXqfScUWCWmakXlKeyWA7h3qqOTXlKaP&#43;pSqMXxm6JPOUeAg=="
+      data-copy=""
+      data-copied=""></script>
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进",
+    "headline": "从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进",
+    
+    "abstract": "\u003ch2 class=\u0022relative group\u0022\u003e0. 引子\n    \u003cdiv id=\u00220-引子\u0022 class=\u0022anchor\u0022\u003e\u003c\/div\u003e\n    \n    \u003cspan\n        class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none\u0022\u003e\n        \u003ca class=\u0022text-primary-300 dark:text-neutral-700 !no-underline\u0022 href=\u0022#0-%e5%bc%95%e5%ad%90\u0022 aria-label=\u0022\u0022\u003e#\u003c\/a\u003e\n    \u003c\/span\u003e\n    \n\u003c\/h2\u003e\n\u003cp\u003eAgent 如何\u0026quot;看见\u0026quot;世界？\u003c\/p\u003e\n\u003cp\u003e它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：\u003cstrong\u003eContext\u003c\/strong\u003e。\u003c\/p\u003e\n\u003cp\u003e一段 prompt 是 context，一次工具调用的返回是 context，一个文件的内容是 context，一条报错信息也是 context。\u003c\/p\u003e\n\u003cp\u003e对于 Agent 来说：\u003cstrong\u003eEverything is context\u003c\/strong\u003e。\u003c\/p\u003e\n\u003cp\u003e这篇文章讲述 context 如何从一段静态文字，演进为 Agent 感知世界的唯一接口。这个演进过程，就是 \u003cstrong\u003eContext Engineering\u003c\/strong\u003e 的诞生之路。\u003c\/p\u003e\n\u003chr\u003e\n\n\u003ch2 class=\u0022relative group\u0022\u003e1. Context 的起源 — In-Context Learning\n    \u003cdiv id=\u00221-context-的起源--in-context-learning\u0022 class=\u0022anchor\u0022\u003e\u003c\/div\u003e\n    \n    \u003cspan\n        class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none\u0022\u003e\n        \u003ca class=\u0022text-primary-300 dark:text-neutral-700 !no-underline\u0022 href=\u0022#1-context-%e7%9a%84%e8%b5%b7%e6%ba%90--in-context-learning\u0022 aria-label=\u0022\u0022\u003e#\u003c\/a\u003e\n    \u003c\/span\u003e\n    \n\u003c\/h2\u003e\n\u003cp\u003e传统机器学习的范式很简单：一个任务，训练一个模型。\u003c\/p\u003e\n\u003cp\u003e情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。\u003c\/p\u003e\n\u003cp\u003eLLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 \u003cstrong\u003econtext\u003c\/strong\u003e 来切换任务。你不需要重新训练，只需要换一段 prompt。\u003c\/p\u003e\n\u003cp\u003e\u003cstrong\u003e传统模型\u003c\/strong\u003e：任务 → 训练 → 专用模型\u003c\/p\u003e",
+    "inLanguage": "zh-CN",
+    "url" : "https://aeromind.github.io/posts/context-journey-blog/",
+    "author" : {
+      "@type": "Person",
+      "name": "AeroMind"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-12-06T00:00:00\u002b00:00",
+    "datePublished": "2025-12-06T00:00:00\u002b00:00",
+    
+    "dateModified": "2025-12-06T00:00:00\u002b00:00",
+    
+    "keywords": ["Agent","AI","Context","LLM","Claude"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "850"
+  }]
+  </script>
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        
+      </a>
+    </div>
+    
+    
+      <div class="min-h-[148px]"></div>
+<div class="fixed inset-x-0 z-100">
+  <div
+    id="menu-blur"
+    class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom bg-neutral dark:bg-neutral-800"></div>
+  <div class="relative m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  class="main-menu flex items-center justify-between py-6 md:justify-start gap-x-3 pt-[2px] pr-2 md:pr-4 pb-[3px] pl-0">
+  
+  
+
+  <div class="flex flex-1 items-center justify-between">
+    <nav class="flex space-x-3">
+      
+        <a href="/" class="text-base font-medium">
+          AeroMind
+        </a>
+      
+    </nav>
+    
+  <nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12">
+    
+      
+        
+  <a
+  href="/posts/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="文章"
+  title="Posts">
+  
+  
+    <p class="text-base font-medium">
+      文章
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href="/tags/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="标签"
+  title="Tags">
+  
+  
+    <p class="text-base font-medium">
+      标签
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href="/about/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="关于"
+  title="关于">
+  
+  
+    <p class="text-base font-medium">
+      关于
+    </p>
+  
+</a>
+
+
+
+      
+    
+
+    
+  <div>
+    <div class="cursor-pointer flex items-center nested-menu">
+      <span class="me-1">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+    <path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3 0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg></span>
+      </span>
+      <div
+        class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400"
+        title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进"></div>
+    </div>
+    <div class="absolute menuhide">
+      <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl">
+        <div class="flex flex-col space-y-3">
+          
+            <a href="/posts/context-journey-blog/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进">
+                中文
+              </p>
+            </a>
+          
+            <a href="/en/posts/context-journey-blog/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="From Prompt to Environment: The Evolution of Context — Understanding the Core Progression of Agent Applications">
+                EN
+              </p>
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+
+    
+      <button
+        id="search-button"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <div class=" flex items-center">
+        <button
+          id="appearance-switcher"
+          aria-label="Dark mode switcher"
+          type="button"
+          class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+          <div class="flex items-center justify-center dark:hidden">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+          </div>
+          <div class="items-center justify-center hidden dark:flex">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+          </div>
+        </button>
+      </div>
+    
+  </nav>
+
+    
+  <div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12">
+    <span></span>
+
+    
+  <div>
+    <div class="cursor-pointer flex items-center nested-menu">
+      <span class="me-1">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+    <path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3 0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg></span>
+      </span>
+      <div
+        class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400"
+        title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进"></div>
+    </div>
+    <div class="absolute menuhide">
+      <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl">
+        <div class="flex flex-col space-y-3">
+          
+            <a href="/posts/context-journey-blog/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进">
+                中文
+              </p>
+            </a>
+          
+            <a href="/en/posts/context-journey-blog/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="From Prompt to Environment: The Evolution of Context — Understanding the Core Progression of Agent Applications">
+                EN
+              </p>
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+
+    
+      <button
+        id="search-button-mobile"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <button
+        id="appearance-switcher-mobile"
+        aria-label="Dark mode switcher"
+        type="button"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1">
+        <div class="flex items-center justify-center dark:hidden">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+        </div>
+        <div class="items-center justify-center hidden dark:flex">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+        </div>
+      </button>
+    
+  </div>
+
+  </div>
+  
+  <div class="-my-2 md:hidden">
+    <div id="menu-button" class="block">
+      
+        <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]">
+          <ul
+            class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl">
+            <li id="menu-close-button">
+              <span
+                class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+                <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+              </span>
+            </li>
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/posts/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="文章"
+    title="Posts">
+    
+    
+      <p class="text-bg font-bg">
+        文章
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/tags/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="标签"
+    title="Tags">
+    
+    
+      <p class="text-bg font-bg">
+        标签
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/about/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="关于"
+    title="关于">
+    
+    
+      <p class="text-bg font-bg">
+        关于
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+
+          </ul>
+          
+        </div>
+      
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+  </div>
+</div>
+
+
+<script
+  type="text/javascript"
+  src="/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js"
+  integrity="sha512-AKV8c&#43;oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ&#43;pkPSYl5ixQYmehaQ=="
+  data-blur-id="menu-blur"></script>
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  
+  <article>
+    
+    
+
+    
+    <header id="single_header" class="mt-5 max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/"
+      >AeroMind</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/context-journey-blog/"
+      >从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进
+      </h1>
+      <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-12-06T00:00:00&#43;00:00"></time><span class="px-2 text-primary-500">&middot;</span><span></span><span class="px-2 text-primary-500">&middot;</span><span title=""></span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+          
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/agent/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Agent
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/ai/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    AI
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/context/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Context
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/llm/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    LLM
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/claude/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Claude
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+      </div>
+      
+        
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    
+    
+<div class="flex author">
+  
+  <div class="place-self-center">
+    
+      <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+        
+      </div>
+      <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+        AeroMind
+      </div>
+    
+    
+    <div class="text-2xl sm:text-lg">
+</div>
+  </div>
+</div>
+
+  
+
+  
+
+  
+    <div class="mb-5"></div>
+  
+
+      
+    </header>
+
+    
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      
+      
+      
+      
+      
+        <div class="order-first lg:ml-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs">
+          <div class="toc ps-5 print:hidden lg:sticky lg:top-[140px]">
+            
+              <details
+  open
+  id="TOCView"
+  class="toc-right mt-0 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg -ms-5 ps-5 pe-2 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-引子">0. 引子</a></li>
+    <li><a href="#1-context-的起源--in-context-learning">1. Context 的起源 — In-Context Learning</a></li>
+    <li><a href="#2-手动构建-context--prompt-engineering">2. 手动构建 Context — Prompt Engineering</a></li>
+    <li><a href="#3-自动检索-context--rag">3. 自动检索 Context — RAG</a>
+      <ul>
+        <li><a href="#context-的稀缺性">Context 的稀缺性</a></li>
+        <li><a href="#rag-的局限">RAG 的局限</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-动态生成-context--tools">4. 动态生成 Context — Tools</a>
+      <ul>
+        <li><a href="#mcp工具的标准化">MCP：工具的标准化</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-封装-context-模式--skills">5. 封装 Context 模式 — Skills</a>
+      <ul>
+        <li><a href="#skill可发现可加载的-context-包">Skill：可发现、可加载的 Context 包</a></li>
+        <li><a href="#skill-vs-shell-脚本">Skill vs Shell 脚本</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-context-的管理--长程任务的挑战">6. Context 的管理 — 长程任务的挑战</a>
+      <ul>
+        <li><a href="#compaction压缩历史">Compaction：压缩历史</a></li>
+        <li><a href="#structured-note-takingagent-的笔记本">Structured Note-taking：Agent 的笔记本</a></li>
+        <li><a href="#sub-agent分而治之">Sub-agent：分而治之</a></li>
+        <li><a href="#选择哪种方法">选择哪种方法？</a></li>
+        <li><a href="#隔离环境跨-session-的外部记忆">隔离环境：跨 Session 的外部记忆</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-context-的完整来源--environment">7. Context 的完整来源 — Environment</a>
+      <ul>
+        <li><a href="#为什么是-coding-agent">为什么是 Coding Agent？</a></li>
+        <li><a href="#代码执行的独特价值">代码执行的独特价值</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-结语context-engineering-的全貌">8. 结语：Context Engineering 的全貌</a></li>
+    <li><a href="#参考链接">参考链接</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-引子">0. 引子</a></li>
+    <li><a href="#1-context-的起源--in-context-learning">1. Context 的起源 — In-Context Learning</a></li>
+    <li><a href="#2-手动构建-context--prompt-engineering">2. 手动构建 Context — Prompt Engineering</a></li>
+    <li><a href="#3-自动检索-context--rag">3. 自动检索 Context — RAG</a>
+      <ul>
+        <li><a href="#context-的稀缺性">Context 的稀缺性</a></li>
+        <li><a href="#rag-的局限">RAG 的局限</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-动态生成-context--tools">4. 动态生成 Context — Tools</a>
+      <ul>
+        <li><a href="#mcp工具的标准化">MCP：工具的标准化</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-封装-context-模式--skills">5. 封装 Context 模式 — Skills</a>
+      <ul>
+        <li><a href="#skill可发现可加载的-context-包">Skill：可发现、可加载的 Context 包</a></li>
+        <li><a href="#skill-vs-shell-脚本">Skill vs Shell 脚本</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-context-的管理--长程任务的挑战">6. Context 的管理 — 长程任务的挑战</a>
+      <ul>
+        <li><a href="#compaction压缩历史">Compaction：压缩历史</a></li>
+        <li><a href="#structured-note-takingagent-的笔记本">Structured Note-taking：Agent 的笔记本</a></li>
+        <li><a href="#sub-agent分而治之">Sub-agent：分而治之</a></li>
+        <li><a href="#选择哪种方法">选择哪种方法？</a></li>
+        <li><a href="#隔离环境跨-session-的外部记忆">隔离环境：跨 Session 的外部记忆</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-context-的完整来源--environment">7. Context 的完整来源 — Environment</a>
+      <ul>
+        <li><a href="#为什么是-coding-agent">为什么是 Coding Agent？</a></li>
+        <li><a href="#代码执行的独特价值">代码执行的独特价值</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-结语context-engineering-的全貌">8. 结语：Context Engineering 的全貌</a></li>
+    <li><a href="#参考链接">参考链接</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+
+<script>
+  (function () {
+    'use strict'
+
+    const SCROLL_OFFSET_RATIO = 0.33
+    const TOC_SELECTOR = '#TableOfContents'
+    const ANCHOR_SELECTOR = '.anchor'
+    const TOC_LINK_SELECTOR = 'a[href^="#"]'
+    const NESTED_LIST_SELECTOR = 'li ul'
+    const ACTIVE_CLASS = 'active'
+    let isJumpingToAnchor = false
+
+    function getActiveAnchorId(anchors, offsetRatio) {
+      const threshold = window.scrollY + window.innerHeight * offsetRatio
+      const tocLinks = [...document.querySelectorAll('#TableOfContents a[href^="#"]')]
+      const tocIds = new Set(tocLinks.map(link => link.getAttribute('href').substring(1)))
+
+      if (isJumpingToAnchor) {
+        for (let i = 0; i < anchors.length; i++) {
+          const anchor = anchors[i]
+          if (!tocIds.has(anchor.id)) continue
+          const top = anchor.getBoundingClientRect().top + window.scrollY
+          if (Math.abs(window.scrollY - top) < 100) {
+            return anchor.id
+          }
+        }
+      }
+
+      for (let i = anchors.length - 1; i >= 0; i--) {
+        const top = anchors[i].getBoundingClientRect().top + window.scrollY
+        if (top <= threshold && tocIds.has(anchors[i].id)) {
+          return anchors[i].id
+        }
+      }
+      return anchors.find(anchor => tocIds.has(anchor.id))?.id || ''
+    }
+
+    function updateTOC({ toc, anchors, links, scrollOffset, collapseInactive }) {
+      const activeId = getActiveAnchorId(anchors, scrollOffset)
+      if (!activeId) return
+
+      links.forEach(link => {
+        const isActive = link.getAttribute('href') === `#${activeId}`
+        link.classList.toggle(ACTIVE_CLASS, isActive)
+
+        if (collapseInactive) {
+          const ul = link.closest('li')?.querySelector('ul')
+          if (ul) ul.style.display = isActive ? '' : 'none'
+        }
+      })
+
+      if (collapseInactive) {
+        const activeLink = toc.querySelector(`a[href="#${CSS.escape(activeId)}"]`)
+        let el = activeLink
+        while (el && el !== toc) {
+          if (el.tagName === 'UL') el.style.display = ''
+          if (el.tagName === 'LI') el.querySelector('ul')?.style.setProperty('display', '')
+          el = el.parentElement
+        }
+      }
+    }
+
+    function initTOC() {
+      const toc = document.querySelector(TOC_SELECTOR)
+      if (!toc) return
+
+      const collapseInactive = true
+      const anchors = [...document.querySelectorAll(ANCHOR_SELECTOR)]
+      const links = [...toc.querySelectorAll(TOC_LINK_SELECTOR)]
+
+      if (collapseInactive) {
+        toc.querySelectorAll(NESTED_LIST_SELECTOR).forEach(ul => ul.style.display = 'none')
+      }
+
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          isJumpingToAnchor = true
+        })
+      })
+
+      const config = {
+        toc,
+        anchors,
+        links,
+        scrollOffset: SCROLL_OFFSET_RATIO,
+        collapseInactive
+      }
+
+      window.addEventListener('scroll', () => updateTOC(config), { passive: true })
+      window.addEventListener('hashchange', () => updateTOC(config), { passive: true })
+
+      updateTOC(config)
+    }
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', initTOC)
+      : initTOC()
+  })()
+</script>
+
+
+            
+          </div>
+        </div>
+      
+
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+
+        <div class="article-content max-w-prose mb-20">
+          
+<h2 class="relative group">0. 引子
+    <div id="0-引子" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#0-%e5%bc%95%e5%ad%90" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>Agent 如何&quot;看见&quot;世界？</p>
+<p>它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：<strong>Context</strong>。</p>
+<p>一段 prompt 是 context，一次工具调用的返回是 context，一个文件的内容是 context，一条报错信息也是 context。</p>
+<p>对于 Agent 来说：<strong>Everything is context</strong>。</p>
+<p>这篇文章讲述 context 如何从一段静态文字，演进为 Agent 感知世界的唯一接口。这个演进过程，就是 <strong>Context Engineering</strong> 的诞生之路。</p>
+<hr>
+
+<h2 class="relative group">1. Context 的起源 — In-Context Learning
+    <div id="1-context-的起源--in-context-learning" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1-context-%e7%9a%84%e8%b5%b7%e6%ba%90--in-context-learning" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>传统机器学习的范式很简单：一个任务，训练一个模型。</p>
+<p>情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。</p>
+<p>LLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 <strong>context</strong> 来切换任务。你不需要重新训练，只需要换一段 prompt。</p>
+<p><strong>传统模型</strong>：任务 → 训练 → 专用模型</p>
+<p><strong>LLM</strong>：通用模型 + Context → 任意任务</p>
+<p>这像什么？像是从专用硬件到通用计算机的转变。</p>
+<p>早期计算是专用的——一台机器做一件事。通用计算机的出现改变了这一切：同一台机器，换一个程序，就能做不同的事。</p>
+<p><strong>程序是计算机的 Context</strong>。</p>
+<p>更神奇的是 few-shot learning。给模型几个示例，它就能学会新任务：</p>
+<ul>
+<li>输入：高兴 → <strong>positive</strong></li>
+<li>输入：难过 → <strong>negative</strong></li>
+<li>输入：开心 → <strong>?</strong></li>
+</ul>
+<p>模型会输出 <strong>positive</strong>。</p>
+<p>没有训练，没有微调，示例本身就是学习。传统机器学习需要收集数据、设计特征、训练模型——而 LLM 只需要几个例子放进 context。</p>
+<p>这就是 <strong>In-Context Learning</strong>：能力不再只存在于参数中，Context 成为能力的载体。</p>
+<p>这是 Context Engineering 的起点——我们发现，<strong>Context 可以承载能力，就像程序可以承载计算逻辑</strong>。</p>
+<hr>
+
+<h2 class="relative group">2. 手动构建 Context — Prompt Engineering
+    <div id="2-手动构建-context--prompt-engineering" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#2-%e6%89%8b%e5%8a%a8%e6%9e%84%e5%bb%ba-context--prompt-engineering" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>既然 Context 能承载能力，那如何设计更好的 Context？</p>
+<p>Prompt Engineering 应运而生。</p>
+<p>最简单的是角色设定：</p>
+<blockquote>
+<p>你是一个资深的代码审查专家&hellip;</p>
+</blockquote>
+<p>然后是结构化指令：</p>
+<blockquote>
+<p>## 任务
+审查以下代码
+<br>
+## 要求
 1. 检查安全漏洞
 2. 检查性能问题
-3. 给出改进建议<br>## 代码
-...</p></blockquote><p>再进阶是思维链（Chain-of-Thought）：</p><blockquote><p>让我们一步步思考&mldr;</p></blockquote><p>还有 ReAct，让模型交替进行推理和行动：</p><blockquote><p>Thought: 我需要先查看文件结构
+3. 给出改进建议
+<br>
+## 代码
+...</p>
+</blockquote>
+<p>再进阶是思维链（Chain-of-Thought）：</p>
+<blockquote>
+<p>让我们一步步思考&hellip;</p>
+</blockquote>
+<p>还有 ReAct，让模型交替进行推理和行动：</p>
+<blockquote>
+<p>Thought: 我需要先查看文件结构
 Action: list_files
-Observation: &mldr;
-Thought: 现在我需要&mldr;</p></blockquote><p>如果把 LLM 比作一个程序，Prompt 就像是它的<strong>配置文件</strong>——定义了行为模式、输入格式、输出规范。好的配置让程序行为可预测、可控制。</p><p>Prompt Engineering 的本质是什么？<strong>人工精心设计每一个 token</strong>，让有限的 context 窗口发挥最大价值。</p><p>但局限也很明显：手动、静态、不可扩展。</p><p>当知识库有一百万文档时，你不可能手动把相关内容塞进 prompt。</p><hr><h2 class="relative group">3. 自动检索 Context — RAG<div id=3-自动检索-context--rag class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#3-%e8%87%aa%e5%8a%a8%e6%a3%80%e7%b4%a2-context--rag aria-label>#</a></span></h2><p>有限的 context 窗口，无限的外部知识。怎么办？</p><p>RAG（Retrieval-Augmented Generation）给出了答案：<strong>让相关信息自动找上门</strong>。用户提问 → 检索相关文档 → 拼入 Context → 生成回答。不再需要把所有知识塞进 prompt，只需要在需要时检索最相关的部分。</p><p>这像什么？像是程序从<strong>文件系统</strong>读取数据，而不是把所有数据硬编码在代码里。</p><h3 class="relative group">Context 的稀缺性<div id=context-的稀缺性 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#context-%e7%9a%84%e7%a8%80%e7%bc%ba%e6%80%a7 aria-label>#</a></span></h3><p>这里要引入一个关键概念：<strong>Context Rot</strong>（上下文腐化）。</p><p>随着 context 窗口中 token 数量增加，模型准确回忆信息的能力会下降。因为 Transformer 架构让每个 token 都要关注其他所有 token，形成 n² 的关系。当 n 变大，注意力被稀释。</p><p>这意味着：<strong>Context 是稀缺资源，边际效用递减</strong>。不是塞得越多越好，而是要找到<strong>最小的高信号 token 集合</strong>。</p><h3 class="relative group">RAG 的局限<div id=rag-的局限 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#rag-%e7%9a%84%e5%b1%80%e9%99%90 aria-label>#</a></span></h3><p>RAG 本质上是一个<strong>固定模式的搜索工具</strong>：固定触发、固定流程、固定能力。</p><p>它的突破在于：从"人工塞 Context"到"自动取 Context"。但它的局限也在于"固定"——如果 Agent 需要的不是检索，而是执行一段代码、调用一个 API 呢？</p><hr><h2 class="relative group">4. 动态生成 Context — Tools<div id=4-动态生成-context--tools class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#4-%e5%8a%a8%e6%80%81%e7%94%9f%e6%88%90-context--tools aria-label>#</a></span></h2><p>RAG 是工具的特例，Tools 是 RAG 的泛化。</p><p><strong>RAG</strong>：固定触发 → 检索 → 返回文本
-<strong>Tools</strong>：Agent 决定 → 任意工具 → 返回结果</p><p>这里先澄清一个概念：<strong>Workflow</strong> 是 LLM 和工具通过预定义路径编排，<strong>Agent</strong> 是 LLM 动态决定自己的流程。关键区别在于<strong>谁在做决策</strong>。</p><p>Tools 让 Agent 成为可能：不只检索还能执行，不只固定触发而是 Agent 自主决定，不只一个而是工具集。这像 Unix 中的可执行程序——<code>cat</code> 读文件，<code>grep</code> 搜索，<code>sh</code> 执行命令。<strong>简单</strong>、<strong>专注</strong>、<strong>c可组合</strong>。</p><p>工具的输出拼入 Context，成为 Agent 的新感知。这是一个闭环：<strong>行动产生新的 Context，新的 Context 驱动下一步行动</strong>。Agent 第一次能"做事"并"看到结果"。</p><h3 class="relative group">MCP：工具的标准化<div id=mcp工具的标准化 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#mcp%e5%b7%a5%e5%85%b7%e7%9a%84%e6%a0%87%e5%87%86%e5%8c%96 aria-label>#</a></span></h3><p>当 Agent 需要连接越来越多外部系统时，每个系统都需要单独的集成代码。<strong>MCP（Model Context Protocol）</strong> 解决了这个问题——<strong>它是 Agent 世界的 USB-C</strong>。</p><p>MCP 提供统一协议，让 Agent 用同一种方式连接所有支持 MCP 的服务。它让 <strong>Tools 成为可发现、可组合的生态系统</strong>。</p><p>MCP 的意义不只是减少重复工作。它让 <strong>Tools 成为可发现、可组合的生态系统</strong>。Agent 不需要预先知道所有工具，可以在运行时发现和使用新工具。</p><hr><h2 class="relative group">5. 封装 Context 模式 — Skills<div id=5-封装-context-模式--skills class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#5-%e5%b0%81%e8%a3%85-context-%e6%a8%a1%e5%bc%8f--skills aria-label>#</a></span></h2><p>有了工具，Agent 能做很多事。但问题也来了：</p><p><strong>工具太多，Context 不够用。</strong> 每个工具的定义、调用参数、返回结果都要占用 token。当 Agent 连接几十上百个工具时，光是工具定义就可能吃掉大量 context 窗口。</p><p>而且原子工具太底层了。读文件、写文件、执行命令——这些是能力的原材料，不是能力本身。</p><p>&ldquo;代码审查"是一个能力。它需要：</p><ul><li>读取代码文件</li><li>理解项目结构</li><li>按照特定标准检查</li><li>输出结构化的审查意见</li></ul><p>如何把这些组合成一个可复用的能力？</p><h3 class="relative group">Skill：可发现、可加载的 Context 包<div id=skill可发现可加载的-context-包 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#skill%e5%8f%af%e5%8f%91%e7%8e%b0%e5%8f%af%e5%8a%a0%e8%bd%bd%e7%9a%84-context-%e5%8c%85 aria-label>#</a></span></h3><p><strong>Skill</strong> 的本质是：<strong>一个包含指令、脚本和资源的文件夹，Agent 可以在需要时发现和加载</strong>。</p><p>这个定义有三个关键点：</p><ol><li><strong>文件夹结构</strong>：不是一段 prompt，而是有组织的资源集合</li><li><strong>可发现</strong>：Agent 知道有哪些 Skill 可用</li><li><strong>按需加载</strong>：只在相关时才加载到 Context</li></ol><p>Skill 的核心设计原则是 <strong>Progressive Disclosure（渐进式披露）</strong>：</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-0-600.png></figure></p><p>为什么这样设计？因为 Context 是稀缺资源。</p><p>如果把所有 Skill 的完整内容都塞进 Context，会触发 Context Rot。渐进式披露让 Agent 只加载需要的信息，保持 Context 的高信噪比。</p><h3 class="relative group">Skill vs Shell 脚本<div id=skill-vs-shell-脚本 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#skill-vs-shell-%e8%84%9a%e6%9c%ac aria-label>#</a></span></h3><p>Unix 哲学在这里再次闪光：<strong>用管道组合小程序，完成复杂任务</strong>。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat access.log <span class=p>|</span> grep <span class=s2>&#34;ERROR&#34;</span> <span class=p>|</span> sort <span class=p>|</span> uniq -c <span class=p>|</span> sort -rn <span class=p>|</span> head -10
-</span></span></code></pre></div><p>这行命令组合了 6 个小程序，完成了"找出最常见的 10 种错误"这个复杂任务。</p><p>Skill 和 Shell 脚本有相似之处：</p><ul><li><strong>Tool</strong> → 单个命令（<code>cat</code>, <code>grep</code>, <code>sort</code>）</li><li><strong>Skill</strong> → Shell 脚本（组合多个命令的工作流）</li></ul><p>但 Skill 比 Shell 脚本更灵活：</p><ul><li>Shell 脚本是<strong>固定的流程</strong></li><li>Skill 是<strong>指导 + 资源</strong>，Agent 可以灵活运用</li></ul><p>Skill 还可以包含<strong>可执行代码</strong>。有些操作用代码比用 token 生成更高效、更可靠。比如排序一个列表，用代码是 O(n log n)，用 token 生成则昂贵且不确定。</p><p>从 Context Engineering 的视角看，Skill 是<strong>可复用的 Context 模式</strong>——预定义好什么信息该进入 Context，以什么顺序，用什么方式处理。</p><hr><h2 class="relative group">6. Context 的管理 — 长程任务的挑战<div id=6-context-的管理--长程任务的挑战 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#6-context-%e7%9a%84%e7%ae%a1%e7%90%86--%e9%95%bf%e7%a8%8b%e4%bb%bb%e5%8a%a1%e7%9a%84%e6%8c%91%e6%88%98 aria-label>#</a></span></h2><p>前面几章讲的是 Context 的<strong>来源</strong>：从哪里获取信息。</p><p>但还有另一个维度：Context 的<strong>管理</strong>。当任务跨越几十分钟甚至几小时，产生的 token 远超 context 窗口时，怎么办？</p><h3 class="relative group">Compaction：压缩历史<div id=compaction压缩历史 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#compaction%e5%8e%8b%e7%bc%a9%e5%8e%86%e5%8f%b2 aria-label>#</a></span></h3><p>最直接的方法是<strong>压缩</strong>。</p><p>当对话接近 context 窗口上限时，让模型总结之前的内容，用摘要替换原始对话，然后继续。</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-1-600.png></figure></p><p>压缩的艺术在于<strong>选择保留什么</strong>。过于激进的压缩会丢失关键细节，过于保守则达不到效果。</p><p>一个低风险的压缩策略是<strong>清理工具调用结果</strong>。当一个工具调用已经在历史深处，Agent 通常不需要再看原始返回值。</p><h3 class="relative group">Structured Note-taking：Agent 的笔记本<div id=structured-note-takingagent-的笔记本 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#structured-note-takingagent-%e7%9a%84%e7%ac%94%e8%ae%b0%e6%9c%ac aria-label>#</a></span></h3><p>更优雅的方法是让 Agent <strong>自己做笔记</strong>。</p><p>Agent 定期把重要信息写入外部文件（比如 NOTES.md），这些笔记持久化在 context 窗口之外。需要时再读回来。</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-2-600.png></figure></p><p>这就像人类做笔记：我们不会记住所有细节，但会记录关键点，需要时查阅。</p><p>一个有趣的例子是 Claude 玩 Pokémon。Agent 需要跨越数千个游戏步骤保持连贯性——记住目标、追踪进度、学习哪些攻击对哪些敌人有效。通过自己维护笔记，Agent 可以在 context 重置后继续多小时的策略执行。</p><h3 class="relative group">Sub-agent：分而治之<div id=sub-agent分而治之 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#sub-agent%e5%88%86%e8%80%8c%e6%b2%bb%e4%b9%8b aria-label>#</a></span></h3><p>第三种方法是<strong>多 Agent 协作</strong>。</p><p>主 Agent 负责高层规划，子 Agent 负责具体执行。每个子 Agent 有自己干净的 context 窗口，可以深入探索，最后只返回精炼的结果。</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-3-600.png></figure></p><p>子 Agent 可能消耗数万 token 进行探索，但只返回 1000-2000 token 的精华。这实现了<strong>关注点分离</strong>——详细的搜索 context 隔离在子 Agent 内，主 Agent 专注于综合分析。</p><h3 class="relative group">选择哪种方法？<div id=选择哪种方法 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#%e9%80%89%e6%8b%a9%e5%93%aa%e7%a7%8d%e6%96%b9%e6%b3%95 aria-label>#</a></span></h3><ul><li><strong>Compaction</strong>：适合需要大量来回对话的任务</li><li><strong>Note-taking</strong>：适合有明确里程碑的迭代开发</li><li><strong>Sub-agent</strong>：适合需要并行探索的复杂研究</li></ul><p>这三种方法可以组合使用。</p><h3 class="relative group">隔离环境：跨 Session 的外部记忆<div id=隔离环境跨-session-的外部记忆 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#%e9%9a%94%e7%a6%bb%e7%8e%af%e5%a2%83%e8%b7%a8-session-%e7%9a%84%e5%a4%96%e9%83%a8%e8%ae%b0%e5%bf%86 aria-label>#</a></span></h3><p>当任务跨越数小时甚至数天时，<strong>每个新的 context window 都是一张白纸</strong>。想象轮班工程师交接，但每个人上班时都失去了前一班的记忆——这就是长程 Agent 的挑战。</p><p>解决方案是<strong>隔离的运行环境</strong>：文件系统持久化代码和文档，Git 记录改动可回滚，进度文件记录工作日志。每个 session 结束时把环境留在"干净状态&rdquo;，下一个 session 读取进度文件和 git log，几秒内就能继续工作。隔离环境是 Agent 的"外部记忆"，弥补了 context window 的有限性。</p><p>关键是认识到：<strong>即使模型能力不断提升，在需要最强性能的场景下，Context 管理仍然是核心挑战</strong>。</p><hr><h2 class="relative group">7. Context 的完整来源 — Environment<div id=7-context-的完整来源--environment class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#7-context-%e7%9a%84%e5%ae%8c%e6%95%b4%e6%9d%a5%e6%ba%90--environment aria-label>#</a></span></h2><p>现在让我们退后一步，看看全貌。</p><p>前面的每一章，我们都在用操作系统做类比：</p><ul><li>Context 像程序的输入</li><li>Prompt 像配置文件</li><li>RAG 像文件系统读取</li><li>Tools 像可执行程序</li><li>Skills 像应用程序</li></ul><p>这不是巧合。<strong>我们正在为 Agent 构建一个操作系统。</strong></p><ul><li><strong>Environment</strong> → 操作系统（完整运行环境）</li><li><strong>Agent</strong> → 用户/Shell（决策主体）</li><li><strong>Tools</strong> → 命令行程序（原子能力）</li><li><strong>Skills</strong> → 应用程序（封装的能力组合）</li><li><strong>Context</strong> → stdin/stdout（统一信息接口）</li></ul><p>这让人想起 Unix 的设计哲学：<strong>Everything is a file</strong>。在 Unix 中，硬件、进程、网络连接都被抽象为文件，程序通过统一的文件接口与世界交互。</p><p>Unix 的设计哲学在这里完美映射：</p><ul><li>Everything is a file → <strong>Everything is context</strong></li><li>小程序做一件事 → Tool 做一件事</li><li>用管道组合程序 → 用 Skill 组合 Tools</li><li>文本作为通用接口 → Context 作为通用接口</li><li>Shell 作为胶水 → Agent 作为胶水</li></ul><p>关键洞察：<strong>Agent 不直接接触 Environment，一切通过 Context 感知。</strong></p><p>就像 Unix 程序通过 stdin 读取输入、stdout 输出结果，Agent 通过 Context 感知世界、表达意图。</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-4-600.png></figure></p><h3 class="relative group">为什么是 Coding Agent？<div id=为什么是-coding-agent class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#%e4%b8%ba%e4%bb%80%e4%b9%88%e6%98%af-coding-agent aria-label>#</a></span></h3><p>这里要回答一个更根本的问题：<strong>为什么我们如此强调 Coding Agent？</strong></p><p>因为我们相信：<strong>Agent 是通向 AGI 的可行路径</strong>。而 Coding Agent 是这条路径上最关键的形态。</p><p>原因很简单：<strong>任何开放式任务，都可以转化为计算机操作。而代码执行是连接一切的桥梁。</strong></p><p>想想看：</p><ul><li>写一篇报告 → 操作文件系统 + 调用写作工具</li><li>分析数据 → 执行 Python 脚本 + 生成可视化</li><li>部署服务 → 执行命令行 + 配置环境</li><li>设计产品 → 调用设计工具 API + 生成原型</li></ul><p>代码是通用的胶水。会写代码的 Agent，理论上可以完成任何可以用计算机完成的任务。</p><p>换句话说：<strong>任何现在由人操作计算机完成的任务，未来都有可能由 Agent 自主完成。</strong></p><h3 class="relative group">代码执行的独特价值<div id=代码执行的独特价值 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c%e7%9a%84%e7%8b%ac%e7%89%b9%e4%bb%b7%e5%80%bc aria-label>#</a></span></h3><p>代码执行不只是"能做事"，它还解决了 Context Engineering 的核心挑战：</p><p><strong>1. 过滤数据，减少 token</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 不用代码执行：10000 行数据全部进入 Context</span>
-</span></span><span class=line><span class=cl><span class=n>tool_call</span><span class=p>:</span> <span class=n>get_spreadsheet</span><span class=p>(</span><span class=nb>id</span><span class=o>=</span><span class=s2>&#34;abc123&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=err>→</span> <span class=n>返回</span> <span class=mi>10000</span> <span class=n>行</span><span class=err>，</span><span class=n>全部进入</span> <span class=n>Context</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># 用代码执行：在执行环境中过滤</span>
-</span></span><span class=line><span class=cl><span class=n>data</span> <span class=o>=</span> <span class=n>get_spreadsheet</span><span class=p>(</span><span class=nb>id</span><span class=o>=</span><span class=s2>&#34;abc123&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>pending</span> <span class=o>=</span> <span class=p>[</span><span class=n>row</span> <span class=k>for</span> <span class=n>row</span> <span class=ow>in</span> <span class=n>data</span> <span class=k>if</span> <span class=n>row</span><span class=p>[</span><span class=s2>&#34;status&#34;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&#34;pending&#34;</span><span class=p>]</span>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Found </span><span class=si>{</span><span class=nb>len</span><span class=p>(</span><span class=n>pending</span><span class=p>)</span><span class=si>}</span><span class=s2> pending orders&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>pending</span><span class=p>[:</span><span class=mi>5</span><span class=p>])</span>  <span class=c1># 只返回 5 行到 Context</span>
-</span></span></code></pre></div><p><strong>2. 保护隐私</strong></p><p>中间数据可以留在执行环境中，不进入模型的 Context。敏感信息（邮箱、电话）可以被自动脱敏。</p><p><strong>3. 持久化状态</strong></p><p>Agent 可以把中间结果写入文件，跨越 context 重置继续工作。甚至可以把成功的代码保存为可复用的函数——这就是 Skill 的雏形。</p><p>这就是为什么 Environment 的核心是代码执行能力：</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-5-600.png></figure></p><p>对于 Coding Agent：</p><ul><li>代码文件的内容 → Context</li><li>终端的执行结果 → Context</li><li>测试的通过/失败 → Context</li><li>编译的错误信息 → Context</li><li>LSP 的类型提示 → Context</li></ul><p><strong>Environment 是 Context 的终极来源。Context 是 Agent 与世界的唯一接口。代码执行是 Agent 改变世界的主要方式。</strong></p><hr><h2 class="relative group">8. 结语：Context Engineering 的全貌<div id=8-结语context-engineering-的全貌 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#8-%e7%bb%93%e8%af%adcontext-engineering-%e7%9a%84%e5%85%a8%e8%b2%8c aria-label>#</a></span></h2><p>回顾这段旅程：</p><p><figure><img class="my-0 rounded-md" loading=lazy decoding=async fetchpriority=low alt src=/images/251206-context-journey-blog-mermaid-6-600.png></figure></p><p>每一步都在回答同一个问题：<strong>如何让 Agent 获得更好的 Context？</strong></p><ul><li>Prompt Engineering：手工打磨每一个 token</li><li>RAG：自动检索相关信息</li><li>Tools：动态执行获取新信息</li><li>Skills：封装可复用的 Context 模式</li><li>Environment：提供完整的信息来源</li></ul><p>而 Context 管理（Compaction、Note-taking、Sub-agent）则回答另一个问题：<strong>如何在有限窗口里最大化 Context 的价值？</strong></p><p><strong>Context Engineering = 来源 × 管理</strong></p><p>这一切，最终指向一个更大的图景：</p><p><strong>我们正在为 Agent 构建操作系统。</strong></p><p>Unix 用 50 年证明了一套设计哲学的生命力：</p><ul><li>Everything is a file</li><li>小程序做好一件事</li><li>用管道组合程序</li><li>文本作为通用接口</li></ul><p>Agent 的世界正在复现这套哲学：</p><ul><li>Everything is context</li><li>Tool 做好一件事</li><li>用 Skill 组合 Tools</li><li>Context 作为通用接口</li></ul><hr><p>最后，回到开篇的问题：</p><blockquote><p>Agent 如何"看见"世界？</p></blockquote><p>答案始终是：<strong>Context</strong>。</p><blockquote><p><strong>Agent 的能力上限 = Context 的质量上限</strong></p></blockquote><p>这就是 Context Engineering。</p><hr><h2 class="relative group">参考链接<div id=参考链接 class=anchor></div><span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"><a class="text-primary-300 dark:text-neutral-700 !no-underline" href=#%e5%8f%82%e8%80%83%e9%93%be%e6%8e%a5 aria-label>#</a></span></h2><p>[1] <a href=https://www.anthropic.com/engineering/building-effective-agents target=_blank>Building Effective AI Agents: https://www.anthropic.com/engineering/building-effective-agents</a></p><p>[2] <a href=https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents target=_blank>Effective Context Engineering for AI Agents: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</a></p><p>[3] <a href=https://www.claude.com/blog/what-is-model-context-protocol target=_blank>What is Model Context Protocol (MCP)?: https://www.claude.com/blog/what-is-model-context-protocol</a></p><p>[4] <a href=https://www.anthropic.com/engineering/code-execution-with-mcp target=_blank>Code Execution with MCP: Building More Efficient Agents: https://www.anthropic.com/engineering/code-execution-with-mcp</a></p><p>[5] <a href=https://www.claude.com/blog/skills target=_blank>Introducing Agent Skills: https://www.claude.com/blog/skills</a></p><p>[6] <a href=https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills target=_blank>Equipping Agents for the Real World with Agent Skills: https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></p><p>[7] <a href=https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents target=_blank>Effective Harnesses for Long-Running Agents: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></p><hr><p><em>本文由 <a href=https://www.anthropic.com/news/claude-opus-4-5 target=_blank>A\ Opus 4.5</a> 协作完成 ✨</em></p></div></div><script type=text/javascript src=/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA==" data-oid=views_posts/context-journey-blog.md data-oid-likes=likes_posts/context-journey-blog.md></script></section><footer class="pt-8 max-w-prose print:hidden"></footer></article><div id=scroll-to-top class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200"><a href=#the-top class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400" aria-label title>&uarr;</a></div></main><footer id=site-footer class="py-10 print:hidden"><div class="flex items-center justify-between"><p class="text-sm text-neutral-500 dark:text-neutral-400">&copy;
-2025
-AeroMind</p><p class="text-xs text-neutral-500 dark:text-neutral-400"></p></div><script>mediumZoom(document.querySelectorAll("img:not(.nozoom)"),{margin:24,background:"rgba(0,0,0,0.5)",scrollOffset:0})</script><script type=text/javascript src=/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh+sCQ0E53ghYrxgYqw+0GCRyIEpA=="></script></footer><div id=search-wrapper class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500" data-url=https://aeromind.github.io/><div id=search-modal class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800"><header class="relative z-10 flex items-center justify-between flex-none px-2"><form class="flex items-center flex-auto min-w-0"><div class="flex items-center justify-center w-8 h-8 text-neutral-400"><span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></div><input type=search id=search-query class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent" placeholder tabindex=0></form><button id=close-search-button class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400" title>
-<span class="relative block icon"><svg viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></button></header><section class="flex-auto px-2 overflow-auto"><ul id=search-results></ul></section></div></div></div></body></html>
+Observation: &hellip;
+Thought: 现在我需要&hellip;</p>
+</blockquote>
+<p>如果把 LLM 比作一个程序，Prompt 就像是它的<strong>配置文件</strong>——定义了行为模式、输入格式、输出规范。好的配置让程序行为可预测、可控制。</p>
+<p>Prompt Engineering 的本质是什么？<strong>人工精心设计每一个 token</strong>，让有限的 context 窗口发挥最大价值。</p>
+<p>但局限也很明显：手动、静态、不可扩展。</p>
+<p>当知识库有一百万文档时，你不可能手动把相关内容塞进 prompt。</p>
+<hr>
+
+<h2 class="relative group">3. 自动检索 Context — RAG
+    <div id="3-自动检索-context--rag" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#3-%e8%87%aa%e5%8a%a8%e6%a3%80%e7%b4%a2-context--rag" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>有限的 context 窗口，无限的外部知识。怎么办？</p>
+<p>RAG（Retrieval-Augmented Generation）给出了答案：<strong>让相关信息自动找上门</strong>。用户提问 → 检索相关文档 → 拼入 Context → 生成回答。不再需要把所有知识塞进 prompt，只需要在需要时检索最相关的部分。</p>
+<p>这像什么？像是程序从<strong>文件系统</strong>读取数据，而不是把所有数据硬编码在代码里。</p>
+
+<h3 class="relative group">Context 的稀缺性
+    <div id="context-的稀缺性" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#context-%e7%9a%84%e7%a8%80%e7%bc%ba%e6%80%a7" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>这里要引入一个关键概念：<strong>Context Rot</strong>（上下文腐化）。</p>
+<p>随着 context 窗口中 token 数量增加，模型准确回忆信息的能力会下降。因为 Transformer 架构让每个 token 都要关注其他所有 token，形成 n² 的关系。当 n 变大，注意力被稀释。</p>
+<p>这意味着：<strong>Context 是稀缺资源，边际效用递减</strong>。不是塞得越多越好，而是要找到<strong>最小的高信号 token 集合</strong>。</p>
+
+<h3 class="relative group">RAG 的局限
+    <div id="rag-的局限" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#rag-%e7%9a%84%e5%b1%80%e9%99%90" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>RAG 本质上是一个<strong>固定模式的搜索工具</strong>：固定触发、固定流程、固定能力。</p>
+<p>它的突破在于：从&quot;人工塞 Context&quot;到&quot;自动取 Context&quot;。但它的局限也在于&quot;固定&quot;——如果 Agent 需要的不是检索，而是执行一段代码、调用一个 API 呢？</p>
+<hr>
+
+<h2 class="relative group">4. 动态生成 Context — Tools
+    <div id="4-动态生成-context--tools" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#4-%e5%8a%a8%e6%80%81%e7%94%9f%e6%88%90-context--tools" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>RAG 是工具的特例，Tools 是 RAG 的泛化。</p>
+<p><strong>RAG</strong>：固定触发 → 检索 → 返回文本
+<strong>Tools</strong>：Agent 决定 → 任意工具 → 返回结果</p>
+<p>这里先澄清一个概念：<strong>Workflow</strong> 是 LLM 和工具通过预定义路径编排，<strong>Agent</strong> 是 LLM 动态决定自己的流程。关键区别在于<strong>谁在做决策</strong>。</p>
+<p>Tools 让 Agent 成为可能：不只检索还能执行，不只固定触发而是 Agent 自主决定，不只一个而是工具集。这像 Unix 中的可执行程序——<code>cat</code> 读文件，<code>grep</code> 搜索，<code>sh</code> 执行命令。<strong>简单</strong>、<strong>专注</strong>、<strong>c可组合</strong>。</p>
+<p>工具的输出拼入 Context，成为 Agent 的新感知。这是一个闭环：<strong>行动产生新的 Context，新的 Context 驱动下一步行动</strong>。Agent 第一次能&quot;做事&quot;并&quot;看到结果&quot;。</p>
+
+<h3 class="relative group">MCP：工具的标准化
+    <div id="mcp工具的标准化" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#mcp%e5%b7%a5%e5%85%b7%e7%9a%84%e6%a0%87%e5%87%86%e5%8c%96" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>当 Agent 需要连接越来越多外部系统时，每个系统都需要单独的集成代码。<strong>MCP（Model Context Protocol）</strong> 解决了这个问题——<strong>它是 Agent 世界的 USB-C</strong>。</p>
+<p>MCP 提供统一协议，让 Agent 用同一种方式连接所有支持 MCP 的服务。它让 <strong>Tools 成为可发现、可组合的生态系统</strong>。</p>
+<p>MCP 的意义不只是减少重复工作。它让 <strong>Tools 成为可发现、可组合的生态系统</strong>。Agent 不需要预先知道所有工具，可以在运行时发现和使用新工具。</p>
+<hr>
+
+<h2 class="relative group">5. 封装 Context 模式 — Skills
+    <div id="5-封装-context-模式--skills" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#5-%e5%b0%81%e8%a3%85-context-%e6%a8%a1%e5%bc%8f--skills" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>有了工具，Agent 能做很多事。但问题也来了：</p>
+<p><strong>工具太多，Context 不够用。</strong> 每个工具的定义、调用参数、返回结果都要占用 token。当 Agent 连接几十上百个工具时，光是工具定义就可能吃掉大量 context 窗口。</p>
+<p>而且原子工具太底层了。读文件、写文件、执行命令——这些是能力的原材料，不是能力本身。</p>
+<p>&ldquo;代码审查&quot;是一个能力。它需要：</p>
+<ul>
+<li>读取代码文件</li>
+<li>理解项目结构</li>
+<li>按照特定标准检查</li>
+<li>输出结构化的审查意见</li>
+</ul>
+<p>如何把这些组合成一个可复用的能力？</p>
+
+<h3 class="relative group">Skill：可发现、可加载的 Context 包
+    <div id="skill可发现可加载的-context-包" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#skill%e5%8f%af%e5%8f%91%e7%8e%b0%e5%8f%af%e5%8a%a0%e8%bd%bd%e7%9a%84-context-%e5%8c%85" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p><strong>Skill</strong> 的本质是：<strong>一个包含指令、脚本和资源的文件夹，Agent 可以在需要时发现和加载</strong>。</p>
+<p>这个定义有三个关键点：</p>
+<ol>
+<li><strong>文件夹结构</strong>：不是一段 prompt，而是有组织的资源集合</li>
+<li><strong>可发现</strong>：Agent 知道有哪些 Skill 可用</li>
+<li><strong>按需加载</strong>：只在相关时才加载到 Context</li>
+</ol>
+<p>Skill 的核心设计原则是 <strong>Progressive Disclosure（渐进式披露）</strong>：</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-0-600.png"
+    ></figure>
+</p>
+<p>为什么这样设计？因为 Context 是稀缺资源。</p>
+<p>如果把所有 Skill 的完整内容都塞进 Context，会触发 Context Rot。渐进式披露让 Agent 只加载需要的信息，保持 Context 的高信噪比。</p>
+
+<h3 class="relative group">Skill vs Shell 脚本
+    <div id="skill-vs-shell-脚本" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#skill-vs-shell-%e8%84%9a%e6%9c%ac" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>Unix 哲学在这里再次闪光：<strong>用管道组合小程序，完成复杂任务</strong>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat access.log <span class="p">|</span> grep <span class="s2">&#34;ERROR&#34;</span> <span class="p">|</span> sort <span class="p">|</span> uniq -c <span class="p">|</span> sort -rn <span class="p">|</span> head -10
+</span></span></code></pre></div><p>这行命令组合了 6 个小程序，完成了&quot;找出最常见的 10 种错误&quot;这个复杂任务。</p>
+<p>Skill 和 Shell 脚本有相似之处：</p>
+<ul>
+<li><strong>Tool</strong> → 单个命令（<code>cat</code>, <code>grep</code>, <code>sort</code>）</li>
+<li><strong>Skill</strong> → Shell 脚本（组合多个命令的工作流）</li>
+</ul>
+<p>但 Skill 比 Shell 脚本更灵活：</p>
+<ul>
+<li>Shell 脚本是<strong>固定的流程</strong></li>
+<li>Skill 是<strong>指导 + 资源</strong>，Agent 可以灵活运用</li>
+</ul>
+<p>Skill 还可以包含<strong>可执行代码</strong>。有些操作用代码比用 token 生成更高效、更可靠。比如排序一个列表，用代码是 O(n log n)，用 token 生成则昂贵且不确定。</p>
+<p>从 Context Engineering 的视角看，Skill 是<strong>可复用的 Context 模式</strong>——预定义好什么信息该进入 Context，以什么顺序，用什么方式处理。</p>
+<hr>
+
+<h2 class="relative group">6. Context 的管理 — 长程任务的挑战
+    <div id="6-context-的管理--长程任务的挑战" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#6-context-%e7%9a%84%e7%ae%a1%e7%90%86--%e9%95%bf%e7%a8%8b%e4%bb%bb%e5%8a%a1%e7%9a%84%e6%8c%91%e6%88%98" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>前面几章讲的是 Context 的<strong>来源</strong>：从哪里获取信息。</p>
+<p>但还有另一个维度：Context 的<strong>管理</strong>。当任务跨越几十分钟甚至几小时，产生的 token 远超 context 窗口时，怎么办？</p>
+
+<h3 class="relative group">Compaction：压缩历史
+    <div id="compaction压缩历史" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#compaction%e5%8e%8b%e7%bc%a9%e5%8e%86%e5%8f%b2" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>最直接的方法是<strong>压缩</strong>。</p>
+<p>当对话接近 context 窗口上限时，让模型总结之前的内容，用摘要替换原始对话，然后继续。</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-1-600.png"
+    ></figure>
+</p>
+<p>压缩的艺术在于<strong>选择保留什么</strong>。过于激进的压缩会丢失关键细节，过于保守则达不到效果。</p>
+<p>一个低风险的压缩策略是<strong>清理工具调用结果</strong>。当一个工具调用已经在历史深处，Agent 通常不需要再看原始返回值。</p>
+
+<h3 class="relative group">Structured Note-taking：Agent 的笔记本
+    <div id="structured-note-takingagent-的笔记本" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#structured-note-takingagent-%e7%9a%84%e7%ac%94%e8%ae%b0%e6%9c%ac" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>更优雅的方法是让 Agent <strong>自己做笔记</strong>。</p>
+<p>Agent 定期把重要信息写入外部文件（比如 NOTES.md），这些笔记持久化在 context 窗口之外。需要时再读回来。</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-2-600.png"
+    ></figure>
+</p>
+<p>这就像人类做笔记：我们不会记住所有细节，但会记录关键点，需要时查阅。</p>
+<p>一个有趣的例子是 Claude 玩 Pokémon。Agent 需要跨越数千个游戏步骤保持连贯性——记住目标、追踪进度、学习哪些攻击对哪些敌人有效。通过自己维护笔记，Agent 可以在 context 重置后继续多小时的策略执行。</p>
+
+<h3 class="relative group">Sub-agent：分而治之
+    <div id="sub-agent分而治之" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#sub-agent%e5%88%86%e8%80%8c%e6%b2%bb%e4%b9%8b" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>第三种方法是<strong>多 Agent 协作</strong>。</p>
+<p>主 Agent 负责高层规划，子 Agent 负责具体执行。每个子 Agent 有自己干净的 context 窗口，可以深入探索，最后只返回精炼的结果。</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-3-600.png"
+    ></figure>
+</p>
+<p>子 Agent 可能消耗数万 token 进行探索，但只返回 1000-2000 token 的精华。这实现了<strong>关注点分离</strong>——详细的搜索 context 隔离在子 Agent 内，主 Agent 专注于综合分析。</p>
+
+<h3 class="relative group">选择哪种方法？
+    <div id="选择哪种方法" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e9%80%89%e6%8b%a9%e5%93%aa%e7%a7%8d%e6%96%b9%e6%b3%95" aria-label="">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>Compaction</strong>：适合需要大量来回对话的任务</li>
+<li><strong>Note-taking</strong>：适合有明确里程碑的迭代开发</li>
+<li><strong>Sub-agent</strong>：适合需要并行探索的复杂研究</li>
+</ul>
+<p>这三种方法可以组合使用。</p>
+
+<h3 class="relative group">隔离环境：跨 Session 的外部记忆
+    <div id="隔离环境跨-session-的外部记忆" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e9%9a%94%e7%a6%bb%e7%8e%af%e5%a2%83%e8%b7%a8-session-%e7%9a%84%e5%a4%96%e9%83%a8%e8%ae%b0%e5%bf%86" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>当任务跨越数小时甚至数天时，<strong>每个新的 context window 都是一张白纸</strong>。想象轮班工程师交接，但每个人上班时都失去了前一班的记忆——这就是长程 Agent 的挑战。</p>
+<p>解决方案是<strong>隔离的运行环境</strong>：文件系统持久化代码和文档，Git 记录改动可回滚，进度文件记录工作日志。每个 session 结束时把环境留在&quot;干净状态&rdquo;，下一个 session 读取进度文件和 git log，几秒内就能继续工作。隔离环境是 Agent 的&quot;外部记忆&quot;，弥补了 context window 的有限性。</p>
+<p>关键是认识到：<strong>即使模型能力不断提升，在需要最强性能的场景下，Context 管理仍然是核心挑战</strong>。</p>
+<hr>
+
+<h2 class="relative group">7. Context 的完整来源 — Environment
+    <div id="7-context-的完整来源--environment" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#7-context-%e7%9a%84%e5%ae%8c%e6%95%b4%e6%9d%a5%e6%ba%90--environment" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>现在让我们退后一步，看看全貌。</p>
+<p>前面的每一章，我们都在用操作系统做类比：</p>
+<ul>
+<li>Context 像程序的输入</li>
+<li>Prompt 像配置文件</li>
+<li>RAG 像文件系统读取</li>
+<li>Tools 像可执行程序</li>
+<li>Skills 像应用程序</li>
+</ul>
+<p>这不是巧合。<strong>我们正在为 Agent 构建一个操作系统。</strong></p>
+<ul>
+<li><strong>Environment</strong> → 操作系统（完整运行环境）</li>
+<li><strong>Agent</strong> → 用户/Shell（决策主体）</li>
+<li><strong>Tools</strong> → 命令行程序（原子能力）</li>
+<li><strong>Skills</strong> → 应用程序（封装的能力组合）</li>
+<li><strong>Context</strong> → stdin/stdout（统一信息接口）</li>
+</ul>
+<p>这让人想起 Unix 的设计哲学：<strong>Everything is a file</strong>。在 Unix 中，硬件、进程、网络连接都被抽象为文件，程序通过统一的文件接口与世界交互。</p>
+<p>Unix 的设计哲学在这里完美映射：</p>
+<ul>
+<li>Everything is a file → <strong>Everything is context</strong></li>
+<li>小程序做一件事 → Tool 做一件事</li>
+<li>用管道组合程序 → 用 Skill 组合 Tools</li>
+<li>文本作为通用接口 → Context 作为通用接口</li>
+<li>Shell 作为胶水 → Agent 作为胶水</li>
+</ul>
+<p>关键洞察：<strong>Agent 不直接接触 Environment，一切通过 Context 感知。</strong></p>
+<p>就像 Unix 程序通过 stdin 读取输入、stdout 输出结果，Agent 通过 Context 感知世界、表达意图。</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-4-600.png"
+    ></figure>
+</p>
+
+<h3 class="relative group">为什么是 Coding Agent？
+    <div id="为什么是-coding-agent" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e6%98%af-coding-agent" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>这里要回答一个更根本的问题：<strong>为什么我们如此强调 Coding Agent？</strong></p>
+<p>因为我们相信：<strong>Agent 是通向 AGI 的可行路径</strong>。而 Coding Agent 是这条路径上最关键的形态。</p>
+<p>原因很简单：<strong>任何开放式任务，都可以转化为计算机操作。而代码执行是连接一切的桥梁。</strong></p>
+<p>想想看：</p>
+<ul>
+<li>写一篇报告 → 操作文件系统 + 调用写作工具</li>
+<li>分析数据 → 执行 Python 脚本 + 生成可视化</li>
+<li>部署服务 → 执行命令行 + 配置环境</li>
+<li>设计产品 → 调用设计工具 API + 生成原型</li>
+</ul>
+<p>代码是通用的胶水。会写代码的 Agent，理论上可以完成任何可以用计算机完成的任务。</p>
+<p>换句话说：<strong>任何现在由人操作计算机完成的任务，未来都有可能由 Agent 自主完成。</strong></p>
+
+<h3 class="relative group">代码执行的独特价值
+    <div id="代码执行的独特价值" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c%e7%9a%84%e7%8b%ac%e7%89%b9%e4%bb%b7%e5%80%bc" aria-label="">#</a>
+    </span>
+    
+</h3>
+<p>代码执行不只是&quot;能做事&quot;，它还解决了 Context Engineering 的核心挑战：</p>
+<p><strong>1. 过滤数据，减少 token</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 不用代码执行：10000 行数据全部进入 Context</span>
+</span></span><span class="line"><span class="cl"><span class="n">tool_call</span><span class="p">:</span> <span class="n">get_spreadsheet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;abc123&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">→</span> <span class="n">返回</span> <span class="mi">10000</span> <span class="n">行</span><span class="err">，</span><span class="n">全部进入</span> <span class="n">Context</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 用代码执行：在执行环境中过滤</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">get_spreadsheet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;abc123&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pending</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&#34;status&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;pending&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pending</span><span class="p">)</span><span class="si">}</span><span class="s2"> pending orders&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">pending</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>  <span class="c1"># 只返回 5 行到 Context</span>
+</span></span></code></pre></div><p><strong>2. 保护隐私</strong></p>
+<p>中间数据可以留在执行环境中，不进入模型的 Context。敏感信息（邮箱、电话）可以被自动脱敏。</p>
+<p><strong>3. 持久化状态</strong></p>
+<p>Agent 可以把中间结果写入文件，跨越 context 重置继续工作。甚至可以把成功的代码保存为可复用的函数——这就是 Skill 的雏形。</p>
+<p>这就是为什么 Environment 的核心是代码执行能力：</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-5-600.png"
+    ></figure>
+</p>
+<p>对于 Coding Agent：</p>
+<ul>
+<li>代码文件的内容 → Context</li>
+<li>终端的执行结果 → Context</li>
+<li>测试的通过/失败 → Context</li>
+<li>编译的错误信息 → Context</li>
+<li>LSP 的类型提示 → Context</li>
+</ul>
+<p><strong>Environment 是 Context 的终极来源。Context 是 Agent 与世界的唯一接口。代码执行是 Agent 改变世界的主要方式。</strong></p>
+<hr>
+
+<h2 class="relative group">8. 结语：Context Engineering 的全貌
+    <div id="8-结语context-engineering-的全貌" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#8-%e7%bb%93%e8%af%adcontext-engineering-%e7%9a%84%e5%85%a8%e8%b2%8c" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>回顾这段旅程：</p>
+<p><figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt=""
+    src="/images/251206-context-journey-blog-mermaid-6-600.png"
+    ></figure>
+</p>
+<p>每一步都在回答同一个问题：<strong>如何让 Agent 获得更好的 Context？</strong></p>
+<ul>
+<li>Prompt Engineering：手工打磨每一个 token</li>
+<li>RAG：自动检索相关信息</li>
+<li>Tools：动态执行获取新信息</li>
+<li>Skills：封装可复用的 Context 模式</li>
+<li>Environment：提供完整的信息来源</li>
+</ul>
+<p>而 Context 管理（Compaction、Note-taking、Sub-agent）则回答另一个问题：<strong>如何在有限窗口里最大化 Context 的价值？</strong></p>
+<p><strong>Context Engineering = 来源 × 管理</strong></p>
+<p>这一切，最终指向一个更大的图景：</p>
+<p><strong>我们正在为 Agent 构建操作系统。</strong></p>
+<p>Unix 用 50 年证明了一套设计哲学的生命力：</p>
+<ul>
+<li>Everything is a file</li>
+<li>小程序做好一件事</li>
+<li>用管道组合程序</li>
+<li>文本作为通用接口</li>
+</ul>
+<p>Agent 的世界正在复现这套哲学：</p>
+<ul>
+<li>Everything is context</li>
+<li>Tool 做好一件事</li>
+<li>用 Skill 组合 Tools</li>
+<li>Context 作为通用接口</li>
+</ul>
+<hr>
+<p>最后，回到开篇的问题：</p>
+<blockquote>
+<p>Agent 如何&quot;看见&quot;世界？</p>
+</blockquote>
+<p>答案始终是：<strong>Context</strong>。</p>
+<blockquote>
+<p><strong>Agent 的能力上限 = Context 的质量上限</strong></p>
+</blockquote>
+<p>这就是 Context Engineering。</p>
+<hr>
+
+<h2 class="relative group">参考链接
+    <div id="参考链接" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e5%8f%82%e8%80%83%e9%93%be%e6%8e%a5" aria-label="">#</a>
+    </span>
+    
+</h2>
+<p>[1] <a
+  href="https://www.anthropic.com/engineering/building-effective-agents"
+    target="_blank"
+  >Building Effective AI Agents: https://www.anthropic.com/engineering/building-effective-agents</a></p>
+<p>[2] <a
+  href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    target="_blank"
+  >Effective Context Engineering for AI Agents: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</a></p>
+<p>[3] <a
+  href="https://www.claude.com/blog/what-is-model-context-protocol"
+    target="_blank"
+  >What is Model Context Protocol (MCP)?: https://www.claude.com/blog/what-is-model-context-protocol</a></p>
+<p>[4] <a
+  href="https://www.anthropic.com/engineering/code-execution-with-mcp"
+    target="_blank"
+  >Code Execution with MCP: Building More Efficient Agents: https://www.anthropic.com/engineering/code-execution-with-mcp</a></p>
+<p>[5] <a
+  href="https://www.claude.com/blog/skills"
+    target="_blank"
+  >Introducing Agent Skills: https://www.claude.com/blog/skills</a></p>
+<p>[6] <a
+  href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills"
+    target="_blank"
+  >Equipping Agents for the Real World with Agent Skills: https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></p>
+<p>[7] <a
+  href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
+    target="_blank"
+  >Effective Harnesses for Long-Running Agents: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></p>
+<hr>
+<p><em>本文由 <a
+  href="https://www.anthropic.com/news/claude-opus-4-5"
+    target="_blank"
+  >A\ Opus 4.5</a> 协作完成 ✨</em></p>
+
+          
+          
+          
+        </div>
+        
+        
+
+        
+
+        
+
+      </div>
+
+      
+      
+        
+        
+          
+          
+        
+          
+          
+        
+        
+        
+        <script
+          type="text/javascript"
+          src="/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js"
+          integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA=="
+          data-oid="views_posts/context-journey-blog.md"
+          data-oid-likes="likes_posts/context-journey-blog.md"></script>
+      
+    </section>
+
+    
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+  
+
+
+      
+    </footer>
+  </article>
+
+        
+
+
+  
+
+
+
+
+
+
+<div
+  id="scroll-to-top"
+  class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200">
+  <a
+    href="#the-top"
+    class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label=""
+    title="">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy;
+          2025
+          AeroMind
+      </p>
+    
+
+    
+    
+      <p class="text-xs text-neutral-500 dark:text-neutral-400">
+        
+        
+        
+      </p>
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="https://aeromind.github.io/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder=""
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>

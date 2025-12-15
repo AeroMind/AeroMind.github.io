@@ -1,9 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on AeroMind</title><link>https://aeromind.github.io/tags/ai/</link><description>Recent content in AI on AeroMind</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>© 2025 AeroMind</copyright><lastBuildDate>Sat, 06 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://aeromind.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进</title><link>https://aeromind.github.io/posts/context-journey-blog/</link><pubDate>Sat, 06 Dec 2025 00:00:00 +0000</pubDate><guid>https://aeromind.github.io/posts/context-journey-blog/</guid><description>&lt;h2 class="relative group"&gt;0. 引子
-&lt;div id="0-引子" class="anchor"&gt;&lt;/div&gt;
-&lt;span
-class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"&gt;
-&lt;a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#0-%e5%bc%95%e5%ad%90" aria-label=""&gt;#&lt;/a&gt;
-&lt;/span&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on AeroMind</title>
+    <link>https://aeromind.github.io/tags/ai/</link>
+    <description>Recent content in AI on AeroMind</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>© 2025 AeroMind</copyright>
+    <lastBuildDate>Sat, 06 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://aeromind.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>从 Prompt 到 Environment：Context 的进化之旅 —— 理解 Agent 应用的核心演进</title>
+      <link>https://aeromind.github.io/posts/context-journey-blog/</link>
+      <pubDate>Sat, 06 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://aeromind.github.io/posts/context-journey-blog/</guid>
+      <description>&lt;h2 class=&#34;relative group&#34;&gt;0. 引子
+    &lt;div id=&#34;0-引子&#34; class=&#34;anchor&#34;&gt;&lt;/div&gt;
+    
+    &lt;span
+        class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none&#34;&gt;
+        &lt;a class=&#34;text-primary-300 dark:text-neutral-700 !no-underline&#34; href=&#34;#0-%e5%bc%95%e5%ad%90&#34; aria-label=&#34;&#34;&gt;#&lt;/a&gt;
+    &lt;/span&gt;
+    
 &lt;/h2&gt;
 &lt;p&gt;Agent 如何&amp;quot;看见&amp;quot;世界？&lt;/p&gt;
 &lt;p&gt;它没有眼睛，没有耳朵，只有一个输入窗口。无论外面的世界多复杂，Agent 能感知的只有一样东西：&lt;strong&gt;Context&lt;/strong&gt;。&lt;/p&gt;
@@ -11,14 +30,22 @@ class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-
 &lt;p&gt;对于 Agent 来说：&lt;strong&gt;Everything is context&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这篇文章讲述 context 如何从一段静态文字，演进为 Agent 感知世界的唯一接口。这个演进过程，就是 &lt;strong&gt;Context Engineering&lt;/strong&gt; 的诞生之路。&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 class="relative group"&gt;1. Context 的起源 — In-Context Learning
-&lt;div id="1-context-的起源--in-context-learning" class="anchor"&gt;&lt;/div&gt;
-&lt;span
-class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"&gt;
-&lt;a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1-context-%e7%9a%84%e8%b5%b7%e6%ba%90--in-context-learning" aria-label=""&gt;#&lt;/a&gt;
-&lt;/span&gt;
+
+&lt;h2 class=&#34;relative group&#34;&gt;1. Context 的起源 — In-Context Learning
+    &lt;div id=&#34;1-context-的起源--in-context-learning&#34; class=&#34;anchor&#34;&gt;&lt;/div&gt;
+    
+    &lt;span
+        class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none&#34;&gt;
+        &lt;a class=&#34;text-primary-300 dark:text-neutral-700 !no-underline&#34; href=&#34;#1-context-%e7%9a%84%e8%b5%b7%e6%ba%90--in-context-learning&#34; aria-label=&#34;&#34;&gt;#&lt;/a&gt;
+    &lt;/span&gt;
+    
 &lt;/h2&gt;
 &lt;p&gt;传统机器学习的范式很简单：一个任务，训练一个模型。&lt;/p&gt;
 &lt;p&gt;情感分析是一个模型，机器翻译是另一个模型。能力固化在参数里，换任务就要重新训练。&lt;/p&gt;
 &lt;p&gt;LLM 打破了这个范式。GPT 系列证明了一件事：一个足够大的语言模型，可以通过 &lt;strong&gt;context&lt;/strong&gt; 来切换任务。你不需要重新训练，只需要换一段 prompt。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;传统模型&lt;/strong&gt;：任务 → 训练 → 专用模型&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;&lt;strong&gt;传统模型&lt;/strong&gt;：任务 → 训练 → 专用模型&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>
